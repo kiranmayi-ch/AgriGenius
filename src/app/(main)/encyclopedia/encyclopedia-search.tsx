@@ -116,16 +116,6 @@ function EncyclopediaForm() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            {state.result.imageUrl && (
-              <div className="relative w-full aspect-video rounded-lg overflow-hidden">
-                <Image
-                  src={state.result.imageUrl}
-                  alt={`Image of ${state.result.name}`}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            )}
             <div>
               <h3 className="font-semibold text-lg mb-2">Description</h3>
               <p className="text-muted-foreground bg-secondary/30 p-3 rounded-md">
