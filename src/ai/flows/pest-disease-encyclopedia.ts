@@ -68,28 +68,20 @@ Your response should include:
 Format the response as a JSON object.`,
       });
 
-      // Generate the text information and the image in parallel
-      const [infoResponse, imageResponse] = await Promise.all([
-        infoPrompt(input),
-        ai.generate({
-          model: 'googleai/imagen-4.0-fast-generate-001',
-          prompt: `A clear, detailed, photorealistic image of a "${input.query}"`,
-        }),
-      ]);
+      // Generate the text information
+      const infoResponse = await infoPrompt(input);
 
       const output = infoResponse.output;
       if (!output) {
         throw new Error('Failed to generate encyclopedia information.');
       }
 
-      const imageUrl = imageResponse.media?.url;
-      if (!imageUrl) {
-        throw new Error('Failed to generate an image for the encyclopedia entry.');
-      }
+      // Use a static placeholder image to avoid billing errors
+      const placeholderImageUrl = 'https://picsum.photos/seed/pest/600/400';
 
       return {
         ...output,
-        imageUrl,
+        imageUrl: placeholderImageUrl,
       };
     }
   );
