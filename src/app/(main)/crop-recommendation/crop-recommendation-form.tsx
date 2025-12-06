@@ -1,7 +1,7 @@
+
 "use client";
 
 import { useActionState } from "react";
-import { useFormStatus } from "react-dom";
 import { getCropRecommendations, type CropRecommendationState } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,6 +11,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { BrainCircuit, Loader2, Sparkles, TrendingUp, CheckCircle2 } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Progress } from "@/components/ui/progress";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useFormStatus } from "react-dom";
 
 const initialState: CropRecommendationState = {
   form: {
@@ -60,32 +62,43 @@ export function CropRecommendationForm() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="location">Location</Label>
-                <Input id="location" name="location" defaultValue={state.form.location} />
+                <Input id="location" name="location" placeholder="e.g., Punjab, India" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="landSize">Land Size (in acres)</Label>
-                <Input id="landSize" name="landSize" type="number" defaultValue={state.form.landSize} />
+                <Input id="landSize" name="landSize" type="number" placeholder="e.g., 50" />
               </div>
             </div>
+             <div className="space-y-2">
+                <Label htmlFor="soilData">Soil Type</Label>
+                <Select name="soilData">
+                    <SelectTrigger id="soilData">
+                        <SelectValue placeholder="Select soil type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="Loamy">Loamy</SelectItem>
+                        <SelectItem value="Clay">Clay</SelectItem>
+                        <SelectItem value="Sandy">Sandy</SelectItem>
+                        <SelectItem value="Silty">Silty</SelectItem>
+                        <SelectItem value="Peaty">Peaty</SelectItem>
+                    </SelectContent>
+                </Select>
+              </div>
             <div className="space-y-2">
               <Label htmlFor="farmDetails">Farm Details</Label>
-              <Textarea id="farmDetails" name="farmDetails" defaultValue={state.form.farmDetails} />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="soilData">Soil Data</Label>
-              <Textarea id="soilData" name="soilData" defaultValue={state.form.soilData} />
+              <Textarea id="farmDetails" name="farmDetails" placeholder="e.g., Good irrigation, primarily grow wheat and rice." />
             </div>
             <div className="space-y-2">
               <Label htmlFor="weatherForecast">Weather Forecast</Label>
-              <Textarea id="weatherForecast" name="weatherForecast" defaultValue={state.form.weatherForecast} />
+              <Textarea id="weatherForecast" name="weatherForecast" placeholder="e.g., Hot and humid with a late monsoon expected."/>
             </div>
             <div className="space-y-2">
               <Label htmlFor="cropRotationHistory">Crop Rotation History</Label>
-              <Textarea id="cropRotationHistory" name="cropRotationHistory" defaultValue={state.form.cropRotationHistory} />
+              <Textarea id="cropRotationHistory" name="cropRotationHistory" placeholder="e.g., 2023: Wheat, 2022: Rice, 2021: Sugarcane" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="marketTrends">Market Trends</Label>
-              <Textarea id="marketTrends" name="marketTrends" defaultValue={state.form.marketTrends} />
+              <Textarea id="marketTrends" name="marketTrends" placeholder="e.g., High demand for organic produce, government subsidies for pulses." />
             </div>
           </CardContent>
           <CardFooter>
@@ -143,3 +156,5 @@ export function CropRecommendationForm() {
     </div>
   );
 }
+
+    

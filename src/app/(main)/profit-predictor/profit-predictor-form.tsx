@@ -1,7 +1,7 @@
+
 "use client";
 
 import { useActionState } from "react";
-import { useFormStatus } from "react-dom";
 import { getProfitPrediction, type ProfitPredictorState } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { BarChart, DollarSign, Leaf, LineChart, Loader2, Sparkles } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
+import { useFormStatus } from "react-dom";
 
 const initialState: ProfitPredictorState = {
   form: {
@@ -65,24 +66,24 @@ export function ProfitPredictorForm() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="cropType">Crop Type</Label>
-                <Input id="cropType" name="cropType" defaultValue={state.form.cropType} />
+                <Input id="cropType" name="cropType" placeholder="e.g., Wheat" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="landSizeAcres">Land Size (in acres)</Label>
-                <Input id="landSizeAcres" name="landSizeAcres" type="number" defaultValue={state.form.landSizeAcres} />
+                <Input id="landSizeAcres" name="landSizeAcres" type="number" placeholder="e.g., 50" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="expectedYieldPerAcre">Expected Yield / Acre (kg)</Label>
-                <Input id="expectedYieldPerAcre" name="expectedYieldPerAcre" type="number" defaultValue={state.form.expectedYieldPerAcre} />
+                <Input id="expectedYieldPerAcre" name="expectedYieldPerAcre" type="number" placeholder="e.g., 2000" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="sellingPricePerUnit">Selling Price / Unit (₹)</Label>
-                <Input id="sellingPricePerUnit" name="sellingPricePerUnit" type="number" step="0.01" defaultValue={state.form.sellingPricePerUnit} />
+                <Input id="sellingPricePerUnit" name="sellingPricePerUnit" type="number" step="0.01" placeholder="e.g., 20" />
               </div>
             </div>
             <div className="space-y-2">
               <Label htmlFor="inputCostsPerAcre">Input Costs / Acre (₹)</Label>
-              <Input id="inputCostsPerAcre" name="inputCostsPerAcre" type="number" defaultValue={state.form.inputCostsPerAcre} />
+              <Input id="inputCostsPerAcre" name="inputCostsPerAcre" type="number" placeholder="e.g., 15000" />
             </div>
           </CardContent>
           <CardFooter>
@@ -142,3 +143,5 @@ export function ProfitPredictorForm() {
     </div>
   );
 }
+
+    

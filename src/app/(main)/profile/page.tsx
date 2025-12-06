@@ -1,3 +1,4 @@
+
 import { PageHeader } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,11 +31,11 @@ export default function ProfilePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="location">Location</Label>
-              <Input id="location" placeholder="e.g., Punjab, India" defaultValue="Punjab, India" />
+              <Input id="location" placeholder="e.g., Punjab, India" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="land-size">Land Size (in acres)</Label>
-              <Input id="land-size" type="number" placeholder="e.g., 50" defaultValue="50" />
+              <Input id="land-size" type="number" placeholder="e.g., 50" />
             </div>
           </div>
           <div className="space-y-2">
@@ -42,7 +43,6 @@ export default function ProfilePage() {
             <Textarea
               id="farm-details"
               placeholder="e.g., Loamy soil, good irrigation, primarily grow wheat and rice."
-              defaultValue="Loamy soil, good irrigation, primarily grow wheat and rice."
               className="min-h-[100px]"
             />
           </div>
@@ -51,7 +51,6 @@ export default function ProfilePage() {
             <Textarea
               id="crop-history"
               placeholder="e.g., 2023: Wheat, 2022: Rice, 2021: Sugarcane"
-              defaultValue="2023: Wheat, 2022: Rice, 2021: Sugarcane"
               className="min-h-[100px]"
             />
           </div>
@@ -63,3 +62,5 @@ export default function ProfilePage() {
     </div>
   );
 }
+
+    

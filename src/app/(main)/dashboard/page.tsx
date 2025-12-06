@@ -1,3 +1,4 @@
+
 import {
   Card,
   CardContent,
@@ -5,14 +6,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ArrowUpRight, Bell, CloudDrizzle, BarChart, Leaf, BrainCircuit, Bug, MessageCircle } from "lucide-react";
+import { Bell, CloudDrizzle, BarChart, Leaf, BrainCircuit, Bug, MessageCircle } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
 import { YieldChart } from "./yield-chart";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
-import Image from "next/image";
 
 const quickActions = [
   { href: "/crop-recommendation", label: "Crop Recommender", icon: BrainCircuit },
@@ -24,30 +21,29 @@ const quickActions = [
 const alerts = [
   {
     title: "Price Alert: Wheat",
-    description: "Market price for wheat has increased by 5%. Consider selling your stock.",
+    description: "Market price for wheat has increased by 5%.",
     time: "5m ago",
     icon: BarChart,
   },
   {
     title: "Weather Warning",
-    description: "Heavy rainfall expected in your area tomorrow. Ensure proper drainage.",
+    description: "Heavy rainfall expected in your area tomorrow.",
     time: "1h ago",
     icon: CloudDrizzle,
   },
   {
     title: "Pest Alert: Aphids",
-    description: "Aphid activity has been reported in your region. Inspect your crops.",
+    description: "Aphid activity reported in your region.",
     time: "3h ago",
     icon: Bug,
   },
 ];
 
 export default function DashboardPage() {
-  const weatherImage = PlaceHolderImages.find(p => p.id === 'weather-sunny');
   return (
     <div className="flex-1 space-y-4 p-4 sm:p-8 pt-6">
       <PageHeader
-        title="Welcome Back, Farmer Joe!"
+        title="Welcome Back!"
         description="Here's what's happening on your farm today."
       />
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -57,8 +53,8 @@ export default function DashboardPage() {
             <span className="text-accent">₹</span>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">4,523,189</div>
-            <p className="text-xs text-muted-foreground">+20.1% from last month</p>
+            <div className="text-2xl font-bold">0</div>
+            <p className="text-xs text-muted-foreground">No data available</p>
           </CardContent>
         </Card>
         <Card>
@@ -67,8 +63,8 @@ export default function DashboardPage() {
             <Leaf className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">12,450 kg</div>
-            <p className="text-xs text-muted-foreground">+12% from last season</p>
+            <div className="text-2xl font-bold">0 kg</div>
+            <p className="text-xs text-muted-foreground">No data available</p>
           </CardContent>
         </Card>
         <Card className="md:col-span-2 lg:col-span-2">
@@ -128,3 +124,5 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+    

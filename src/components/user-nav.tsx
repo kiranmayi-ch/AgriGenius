@@ -1,3 +1,4 @@
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,12 +10,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { LogOut, Settings, User } from "lucide-react";
 
 export function UserNav() {
-  const userAvatar = PlaceHolderImages.find(p => p.id === 'user-avatar');
-
   return (
     <div className="p-2">
       <DropdownMenu>
@@ -24,21 +22,21 @@ export function UserNav() {
             className="relative h-12 w-full justify-start gap-2 group-data-[collapsible=icon]:h-10 group-data-[collapsible=icon]:w-10 group-data-[collapsible=icon]:px-2"
           >
             <Avatar className="h-8 w-8">
-              <AvatarImage src={userAvatar?.imageUrl} alt="Farmer" data-ai-hint={userAvatar?.imageHint} />
-              <AvatarFallback>F</AvatarFallback>
+              <AvatarImage src="" alt="User avatar" />
+              <AvatarFallback>U</AvatarFallback>
             </Avatar>
             <div className="text-left group-data-[collapsible=icon]:hidden">
-              <p className="text-sm font-medium">Farmer Joe</p>
-              <p className="text-xs text-muted-foreground">joe@farm.com</p>
+              <p className="text-sm font-medium">Your Name</p>
+              <p className="text-xs text-muted-foreground">your.email@example.com</p>
             </div>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end" forceMount>
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
-              <p className="text-sm font-medium leading-none">Farmer Joe</p>
+              <p className="text-sm font-medium leading-none">Your Name</p>
               <p className="text-xs leading-none text-muted-foreground">
-                joe@farm.com
+                your.email@example.com
               </p>
             </div>
           </DropdownMenuLabel>
@@ -63,3 +61,5 @@ export function UserNav() {
     </div>
   );
 }
+
+    
