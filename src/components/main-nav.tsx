@@ -18,6 +18,7 @@ import {
   UserCheck,
   Users,
   BookOpen,
+  CloudSun,
 } from "lucide-react";
 
 const menuItems = [
@@ -45,6 +46,7 @@ const menuItems = [
   { href: "/agri-expert", label: "Agri Expert", icon: UserCheck, tooltip: "Agri Expert" },
   { href: "/community", label: "Community", icon: Users, tooltip: "Community" },
   { href: "/encyclopedia", label: "Encyclopedia", icon: BookOpen, tooltip: "Pest & Disease Encyclopedia" },
+  { href: "/weather-plan", label: "Weather Plan", icon: CloudSun, tooltip: "Weather-Proof Farming Plan" },
 ];
 
 export function MainNav() {
