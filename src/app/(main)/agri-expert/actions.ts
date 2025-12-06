@@ -5,6 +5,7 @@ import { z } from "zod";
 
 const ExpertActionSchema = z.object({
   query: z.string().min(1, "Query is required."),
+  category: z.string().min(1, "Category is required."),
 });
 
 export async function getExpertResponse(

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { getExpertResponse } from "./actions";
 import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import { Loader2, Send, Sparkles, User, UserCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import type { AnswerExpertQuestionsInput } from "@/ai/flows/answer-expert-questions";
 
 type Message = {
   id: number;
@@ -16,7 +17,11 @@ type Message = {
   content: string;
 };
 
-export function AgriExpertChat() {
+type AgriExpertChatProps = {
+  category: AnswerExpertQuestionsInput['category'];
+}
+
+export function AgriExpertChat({ category }: AgriExpertChatProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -44,7 +49,7 @@ export function AgriExpertChat() {
     setInput("");
     setIsLoading(true);
 
-    const response = await getExpertResponse({ query: input });
+    const response = await getExpertResponse({ query: input, category });
 
     if ("answer" in response) {
       const expertMessage: Message = {
@@ -72,8 +77,8 @@ export function AgriExpertChat() {
             {messages.length === 0 && (
                 <div className="text-center p-8 text-muted-foreground">
                     <Sparkles className="mx-auto h-12 w-12 mb-4"/>
-                    <h3 className="text-lg font-semibold">Ask the Expert</h3>
-                    <p>Ask detailed questions about crop management, soil health, or market analysis.</p>
+                    <h3 className="text-lg font-semibold">Ask the {category} Expert</h3>
+                    <p>Ask detailed questions about {category.toLowerCase()} management, soil health, or market analysis.</p>
                 </div>
             )}
             {messages.map((message) => (
@@ -129,7 +134,7 @@ export function AgriExpertChat() {
           <Textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Type your question for the expert here..."
+            placeholder={`Ask the ${category} expert...`}
             className="pr-16 min-h-[60px] resize-none"
             onKeyDown={(e) => {
                 if(e.key === 'Enter' && !e.shiftKey) {

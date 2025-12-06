@@ -13,6 +13,7 @@ import {z} from 'genkit';
 
 const AnswerExpertQuestionsInputSchema = z.object({
   query: z.string().describe('The detailed question from the farmer.'),
+  category: z.string().describe('The crop category for the expert (e.g., Grains, Vegetables).')
 });
 
 export type AnswerExpertQuestionsInput = z.infer<
@@ -41,7 +42,7 @@ const prompt = ai.definePrompt({
   output: {
     schema: AnswerExpertQuestionsOutputSchema,
   },
-  prompt: `You are a world-renowned agriculture expert with 30 years of experience in agronomy and soil science.
+  prompt: `You are a world-renowned agriculture expert with 30 years of experience specializing in {{{category}}}.
 A user is asking for your advice. Provide a detailed, comprehensive, and authoritative answer.
 Assume the user is looking for in-depth information, including scientific reasoning and actionable steps.
 Break down complex topics into easy-to-understand sections.
