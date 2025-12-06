@@ -10,14 +10,14 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'zod';
 
-export const PestDiseaseEncyclopediaInputSchema = z.object({
+const PestDiseaseEncyclopediaInputSchema = z.object({
   query: z.string().describe('The name of the pest or disease to look up.'),
 });
 export type PestDiseaseEncyclopediaInput = z.infer<
   typeof PestDiseaseEncyclopediaInputSchema
 >;
 
-export const PestDiseaseEncyclopediaOutputSchema = z.object({
+const PestDiseaseEncyclopediaOutputSchema = z.object({
   name: z.string().describe('The common name of the pest or disease.'),
   description: z
     .string()
@@ -43,24 +43,21 @@ export type PestDiseaseEncyclopediaOutput = z.infer<
 export async function getPestDiseaseInfo(
   input: PestDiseaseEncyclopediaInput
 ): Promise<PestDiseaseEncyclopediaOutput> {
-  return getPestDiseaseInfoFlow(input);
-}
-
-const getPestDiseaseInfoFlow = ai.defineFlow(
-  {
-    name: 'getPestDiseaseInfoFlow',
-    inputSchema: PestDiseaseEncyclopediaInputSchema,
-    outputSchema: PestDiseaseEncyclopediaOutputSchema,
-  },
-  async input => {
-    // Define the prompt for fetching textual information
-    const infoPrompt = ai.definePrompt({
-      name: 'pestDiseaseInfoPrompt',
-      input: {schema: PestDiseaseEncyclopediaInputSchema},
-      output: {
-        schema: PestDiseaseEncyclopediaOutputSchema.omit({imageUrl: true}),
-      },
-      prompt: `You are an expert agricultural entomologist and plant pathologist.
+  const getPestDiseaseInfoFlow = ai.defineFlow(
+    {
+      name: 'getPestDiseaseInfoFlow',
+      inputSchema: PestDiseaseEncyclopediaInputSchema,
+      outputSchema: PestDiseaseEncyclopediaOutputSchema,
+    },
+    async input => {
+      // Define the prompt for fetching textual information
+      const infoPrompt = ai.definePrompt({
+        name: 'pestDiseaseInfoPrompt',
+        input: {schema: PestDiseaseEncyclopediaInputSchema},
+        output: {
+          schema: PestDiseaseEncyclopediaOutputSchema.omit({imageUrl: true}),
+        },
+        prompt: `You are an expert agricultural entomologist and plant pathologist.
 Provide a detailed encyclopedia entry for the following pest or disease: {{{query}}}.
 
 Your response should include:
@@ -69,30 +66,33 @@ Your response should include:
 - A bulleted list of recommended treatment and prevention methods.
 
 Format the response as a JSON object.`,
-    });
+      });
 
-    // Generate the text information and the image in parallel
-    const [infoResponse, imageResponse] = await Promise.all([
-      infoPrompt(input),
-      ai.generate({
-        model: 'googleai/imagen-4.0-fast-generate-001',
-        prompt: `A clear, detailed, photorealistic image of a "${input.query}"`,
-      }),
-    ]);
-    
-    const output = infoResponse.output;
-    if (!output) {
-      throw new Error('Failed to generate encyclopedia information.');
+      // Generate the text information and the image in parallel
+      const [infoResponse, imageResponse] = await Promise.all([
+        infoPrompt(input),
+        ai.generate({
+          model: 'googleai/imagen-4.0-fast-generate-001',
+          prompt: `A clear, detailed, photorealistic image of a "${input.query}"`,
+        }),
+      ]);
+
+      const output = infoResponse.output;
+      if (!output) {
+        throw new Error('Failed to generate encyclopedia information.');
+      }
+
+      const imageUrl = imageResponse.media?.url;
+      if (!imageUrl) {
+        throw new Error('Failed to generate an image for the encyclopedia entry.');
+      }
+
+      return {
+        ...output,
+        imageUrl,
+      };
     }
+  );
 
-    const imageUrl = imageResponse.media?.url;
-    if (!imageUrl) {
-      throw new Error('Failed to generate an image for the encyclopedia entry.');
-    }
-
-    return {
-      ...output,
-      imageUrl,
-    };
-  }
-);
+  return getPestDiseaseInfoFlow(input);
+}
