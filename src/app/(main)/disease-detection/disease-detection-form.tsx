@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState, useFormStatus } from "react";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
 import { getDiseaseDetection, type DiseaseDetectionState } from "./actions";
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
