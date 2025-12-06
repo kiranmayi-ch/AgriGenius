@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import React, { useActionState, useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { generateCommunityInsights, type CommunityInsightsState } from "./actions";
 import { Button } from "@/components/ui/button";
@@ -36,10 +36,11 @@ function SubmitButton() {
   );
 }
 
-export function CommunityInsightsForm() {
-  const [state, formAction] = useActionState(generateCommunityInsights, initialState);
 
-  return (
+function CommunityForm() {
+    const [state, formAction] = useActionState(generateCommunityInsights, initialState);
+
+    return (
     <div className="space-y-6">
       <form action={formAction}>
         <Card>
@@ -160,4 +161,18 @@ export function CommunityInsightsForm() {
       )}
     </div>
   );
+}
+
+
+export function CommunityInsightsForm() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
+  return <CommunityForm />;
 }
