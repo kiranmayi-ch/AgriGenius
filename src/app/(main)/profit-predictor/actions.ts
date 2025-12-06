@@ -15,6 +15,7 @@ const ProfitPredictorSchema = z.object({
   expectedYieldPerAcre: z.coerce.number().min(0, "Expected yield cannot be negative."),
   sellingPricePerUnit: z.coerce.number().min(0, "Selling price cannot be negative."),
   inputCostsPerAcre: z.coerce.number().min(0, "Input costs cannot be negative."),
+  location: z.string().min(1, "Location is required."),
 });
 
 export async function getProfitPrediction(

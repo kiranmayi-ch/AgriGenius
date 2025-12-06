@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { BarChart, DollarSign, Leaf, LineChart, Loader2, Sparkles } from "lucide-react";
+import { BarChart, DollarSign, Leaf, LineChart, Loader2, Sparkles, Map, Pin } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
 import { useFormStatus } from "react-dom";
@@ -19,6 +19,7 @@ const initialState: ProfitPredictorState = {
     expectedYieldPerAcre: 0,
     sellingPricePerUnit: 0,
     inputCostsPerAcre: 0,
+    location: "",
   },
 };
 
@@ -63,6 +64,10 @@ export function ProfitPredictorForm() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
+            <div className="space-y-2">
+                <Label htmlFor="location">Your Location</Label>
+                <Input id="location" name="location" placeholder="e.g., Nashik, Maharashtra" />
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="cropType">Crop Type</Label>
@@ -77,7 +82,7 @@ export function ProfitPredictorForm() {
                 <Input id="expectedYieldPerAcre" name="expectedYieldPerAcre" type="number" placeholder="e.g., 2000" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="sellingPricePerUnit">Selling Price / Unit (₹)</Label>
+                <Label htmlFor="sellingPricePerUnit">Avg. Selling Price / Unit (₹)</Label>
                 <Input id="sellingPricePerUnit" name="sellingPricePerUnit" type="number" step="0.01" placeholder="e.g., 20" />
               </div>
             </div>
@@ -100,45 +105,88 @@ export function ProfitPredictorForm() {
       )}
 
       {state.result && (
-        <Card>
-            <CardHeader>
+        <>
+          <Card>
+              <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                      <Sparkles className="h-6 w-6 text-primary" />
+                      Prediction Results for {state.form.cropType}
+                  </CardTitle>
+                  <CardDescription>
+                      Here is the estimated financial breakdown for your {state.form.landSizeAcres}-acre farm.
+                  </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                  <div className="flex items-center justify-between p-4 bg-secondary/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                          <Leaf className="h-6 w-6 text-muted-foreground" />
+                          <span className="font-medium">Total Expected Yield</span>
+                      </div>
+                      <span className="text-xl font-bold">{formatNumber(state.result.expectedYield)} kg</span>
+                  </div>
+                  <div className="flex items-center justify-between p-4 bg-secondary/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                          <DollarSign className="h-6 w-6 text-muted-foreground" />
+                          <span className="font-medium">Expected Income (Avg. Price)</span>
+                      </div>
+                      <span className="text-xl font-bold">{formatCurrency(state.result.expectedIncome)}</span>
+                  </div>
+                  <div className="flex items-center justify-between p-4 bg-destructive/10 rounded-lg">
+                      <div className="flex items-center gap-3 text-destructive">
+                          <LineChart className="h-6 w-6 " />
+                          <span className="font-medium">Total Input Costs</span>
+                      </div>
+                      <span className="text-xl font-bold text-destructive">{formatCurrency(state.result.totalInputCosts)}</span>
+                  </div>
+                  <Separator />
+                  <div className={`flex items-center justify-between p-4 rounded-lg ${state.result.estimatedProfitLoss >= 0 ? 'bg-accent/10 text-accent-foreground' : 'bg-destructive/10 text-destructive'}`}>
+                      <span className="text-lg font-bold">Estimated Profit / Loss</span>
+                      <span className={`text-2xl font-bold ${state.result.estimatedProfitLoss >= 0 ? 'text-accent-foreground' : 'text-destructive'}`}>{formatCurrency(state.result.estimatedProfitLoss)}</span>
+                  </div>
+              </CardContent>
+          </Card>
+
+          {state.result.marketSuggestions && state.result.marketSuggestions.length > 0 && (
+            <Card>
+              <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                    <Sparkles className="h-6 w-6 text-primary" />
-                    Prediction Results for {state.form.cropType}
+                    <Map className="h-6 w-6 text-primary" />
+                    Intelligent Market Suggestions
                 </CardTitle>
                 <CardDescription>
-                    Here is the estimated financial breakdown for your {state.form.landSizeAcres}-acre farm.
+                    Sell your crop at these nearby Mandis for potentially higher profits.
                 </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-                <div className="flex items-center justify-between p-4 bg-secondary/50 rounded-lg">
-                    <div className="flex items-center gap-3">
-                        <Leaf className="h-6 w-6 text-muted-foreground" />
-                        <span className="font-medium">Total Expected Yield</span>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {state.result.marketSuggestions.map((market, index) => (
+                  <div key={index} className="p-4 border rounded-lg hover:bg-secondary/50 transition-colors">
+                    <div className="flex justify-between items-start">
+                        <div>
+                            <h4 className="font-semibold text-lg">{market.mandiName}</h4>
+                            <p className="text-sm text-muted-foreground flex items-center gap-1"><Pin className="h-3 w-3"/>{market.distance}</p>
+                        </div>
+                        <div className="text-right">
+                           <p className="font-bold text-lg text-accent">{formatCurrency(market.potentialProfit)}</p>
+                           <p className="text-sm text-muted-foreground">Est. Profit</p>
+                        </div>
                     </div>
-                    <span className="text-xl font-bold">{formatNumber(state.result.expectedYield)} kg</span>
-                </div>
-                 <div className="flex items-center justify-between p-4 bg-secondary/50 rounded-lg">
-                    <div className="flex items-center gap-3">
-                        <DollarSign className="h-6 w-6 text-muted-foreground" />
-                        <span className="font-medium">Expected Income</span>
+                    <Separator className="my-3"/>
+                    <div className="space-y-2 text-sm">
+                         <div className="flex justify-between">
+                            <span className="text-muted-foreground">Est. Price / Unit</span>
+                            <span className="font-medium">{formatCurrency(market.estimatedPrice)}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                            <span className="text-muted-foreground">Advantage</span>
+                            <span className="font-medium text-right">{market.pros}</span>
+                        </div>
                     </div>
-                    <span className="text-xl font-bold">{formatCurrency(state.result.expectedIncome)}</span>
-                </div>
-                 <div className="flex items-center justify-between p-4 bg-destructive/10 rounded-lg">
-                    <div className="flex items-center gap-3 text-destructive">
-                        <LineChart className="h-6 w-6 " />
-                        <span className="font-medium">Total Input Costs</span>
-                    </div>
-                    <span className="text-xl font-bold text-destructive">{formatCurrency(state.result.totalInputCosts)}</span>
-                </div>
-                <Separator />
-                <div className={`flex items-center justify-between p-4 rounded-lg ${state.result.estimatedProfitLoss >= 0 ? 'bg-accent/10 text-accent-foreground' : 'bg-destructive/10 text-destructive'}`}>
-                    <span className="text-lg font-bold">Estimated Profit / Loss</span>
-                    <span className={`text-2xl font-bold ${state.result.estimatedProfitLoss >= 0 ? 'text-accent-foreground' : 'text-destructive'}`}>{formatCurrency(state.result.estimatedProfitLoss)}</span>
-                </div>
-            </CardContent>
-        </Card>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          )}
+        </>
       )}
     </div>
   );
