@@ -8,10 +8,10 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Bug, Camera, ClipboardCheck, Loader2, Sparkles, AlertCircle, ShieldQuestion } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
+import { DamageCostCalculator } from "./damage-cost-calculator";
 
 const initialState: DiseaseDetectionState = {};
 
@@ -128,31 +128,38 @@ export function DiseaseDetectionForm() {
       )}
 
       {state.result && (
-        <Card>
-            <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                    <Sparkles className="h-6 w-6 text-primary" />
-                    Analysis Report
-                </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-lg font-semibold">
-                        <ShieldQuestion className="h-5 w-5 text-muted-foreground"/>
-                        Diagnosis: {state.result.disease}
-                    </div>
-                    <Badge variant={severityBadgeVariant(state.result.severity)}>Severity: {state.result.severity}</Badge>
-                </div>
-                <div>
-                    <h4 className="font-semibold mb-2">Explanation</h4>
-                    <p className="text-sm text-muted-foreground bg-secondary/50 p-3 rounded-md">{state.result.explanation}</p>
-                </div>
-                 <div>
-                    <h4 className="font-semibold mb-2 flex items-center gap-2"><ClipboardCheck className="h-5 w-5 text-accent"/> Recommended Actions</h4>
-                    <p className="text-sm text-muted-foreground bg-secondary/50 p-3 rounded-md whitespace-pre-wrap">{state.result.recommendedActions}</p>
-                </div>
-            </CardContent>
-        </Card>
+        <div className='space-y-6'>
+          <Card>
+              <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                      <Sparkles className="h-6 w-6 text-primary" />
+                      Analysis Report
+                  </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                  <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 text-lg font-semibold">
+                          <ShieldQuestion className="h-5 w-5 text-muted-foreground"/>
+                          Diagnosis: {state.result.disease}
+                      </div>
+                      <Badge variant={severityBadgeVariant(state.result.severity)}>Severity: {state.result.severity}</Badge>
+                  </div>
+                  <div>
+                      <h4 className="font-semibold mb-2">Explanation</h4>
+                      <p className="text-sm text-muted-foreground bg-secondary/50 p-3 rounded-md">{state.result.explanation}</p>
+                  </div>
+                  <div>
+                      <h4 className="font-semibold mb-2 flex items-center gap-2"><ClipboardCheck className="h-5 w-5 text-accent"/> Recommended Actions</h4>
+                      <p className="text-sm text-muted-foreground bg-secondary/50 p-3 rounded-md whitespace-pre-wrap">{state.result.recommendedActions}</p>
+                  </div>
+              </CardContent>
+          </Card>
+
+          {state.result.disease !== "The plant is healthy" && (
+            <DamageCostCalculator diseaseResult={state.result} initialState={state} />
+          )}
+
+        </div>
       )}
     </div>
   );
