@@ -1,6 +1,6 @@
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState, useFormStatus } from "react";
 import { getDiseaseDetection, type DiseaseDetectionState } from "./actions";
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
@@ -34,7 +34,7 @@ function SubmitButton() {
 }
 
 export function DiseaseDetectionForm() {
-  const [state, formAction] = useFormState(getDiseaseDetection, initialState);
+  const [state, formAction] = useActionState(getDiseaseDetection, initialState);
   const [preview, setPreview] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string>("");
   const hiddenDataUriInput = useRef<HTMLInputElement>(null);

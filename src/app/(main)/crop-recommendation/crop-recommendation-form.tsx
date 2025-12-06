@@ -1,6 +1,6 @@
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState, useFormStatus } from "react";
 import { getCropRecommendations, type CropRecommendationState } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -43,7 +43,7 @@ function SubmitButton() {
 }
 
 export function CropRecommendationForm() {
-  const [state, formAction] = useFormState(getCropRecommendations, initialState);
+  const [state, formAction] = useActionState(getCropRecommendations, initialState);
 
   return (
     <div className="space-y-6">

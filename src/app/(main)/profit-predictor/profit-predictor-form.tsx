@@ -1,6 +1,6 @@
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState, useFormStatus } from "react";
 import { getProfitPrediction, type ProfitPredictorState } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -40,7 +40,7 @@ function SubmitButton() {
 }
 
 export function ProfitPredictorForm() {
-  const [state, formAction] = useFormState(getProfitPrediction, initialState);
+  const [state, formAction] = useActionState(getProfitPrediction, initialState);
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
