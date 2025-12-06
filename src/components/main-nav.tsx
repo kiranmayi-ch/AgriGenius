@@ -17,6 +17,7 @@ import {
   MessageCircle,
   UserCheck,
   Users,
+  BookOpen,
 } from "lucide-react";
 
 const menuItems = [
@@ -43,6 +44,7 @@ const menuItems = [
   { href: "/assistant", label: "AI Assistant", icon: MessageCircle, tooltip: "AI Assistant" },
   { href: "/agri-expert", label: "Agri Expert", icon: UserCheck, tooltip: "Agri Expert" },
   { href: "/community", label: "Community", icon: Users, tooltip: "Community" },
+  { href: "/encyclopedia", label: "Encyclopedia", icon: BookOpen, tooltip: "Pest & Disease Encyclopedia" },
 ];
 
 export function MainNav() {
