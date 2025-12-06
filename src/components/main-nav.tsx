@@ -15,6 +15,7 @@ import {
   BarChart,
   Bug,
   MessageCircle,
+  UserCheck,
 } from "lucide-react";
 
 const menuItems = [
@@ -39,6 +40,7 @@ const menuItems = [
     tooltip: "Disease Detection"
   },
   { href: "/assistant", label: "AI Assistant", icon: MessageCircle, tooltip: "AI Assistant" },
+  { href: "/agri-expert", label: "Agri Expert", icon: UserCheck, tooltip: "Agri Expert" },
 ];
 
 export function MainNav() {
@@ -48,16 +50,16 @@ export function MainNav() {
     <SidebarMenu>
       {menuItems.map((item) => (
         <SidebarMenuItem key={item.href}>
+          <Link href={item.href} passHref legacyBehavior>
             <SidebarMenuButton
-              asChild
+              as="a"
               isActive={pathname.startsWith(item.href)}
               tooltip={item.tooltip}
             >
-              <Link href={item.href}>
                 <item.icon />
                 <span>{item.label}</span>
-              </Link>
             </SidebarMenuButton>
+          </Link>
         </SidebarMenuItem>
       ))}
     </SidebarMenu>
