@@ -1,3 +1,46 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "farm-aerial",
+      "description": "Aerial view of a farm with green fields.",
+      "imageUrl": "https://images.unsplash.com/photo-1628859742240-269783f56d17?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxmYXJtJTIwYWVyaWFsfGVufDB8fHx8MTc2NTA0NDk0OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "farm aerial"
+    },
+    {
+      "id": "weather-sunny",
+      "description": "Sunny weather over a field.",
+      "imageUrl": "https://images.unsplash.com/photo-1529923123842-3310dfdc0b10?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdW5ueSUyMGZpZWxkfGVufDB8fHx8MTc2NTA0MTQ0OXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "sunny field"
+    },
+    {
+      "id": "crop-recommendation-card",
+      "description": "Lush green crops in a field",
+      "imageUrl": "https://images.unsplash.com/photo-1497094249532-36ecba33f9ff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxncmVlbiUyMGNyb3BzfGVufDB8fHx8MTc2NTAxNzA3NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "green crops"
+    },
+    {
+      "id": "profit-predictor-card",
+      "description": "Farmer holding harvested crops",
+      "imageUrl": "https://images.unsplash.com/photo-1760969141858-3d631ec80bcf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxoYXJ2ZXN0ZWQlMjBjcm9wfGVufDB8fHx8MTc2NTA0OTM4N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "harvested crop"
+    },
+    {
+      "id": "disease-detection-card",
+      "description": "Close up of a leaf with spots",
+      "imageUrl": "https://images.unsplash.com/photo-1699508059832-3488136a6e84?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxsZWFmJTIwc3BvdHN8ZW58MHx8fHwxNzY1MDQ5Mzg3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "leaf spots"
+    },
+    {
+      "id": "ai-assistant-card",
+      "description": "Person using a phone in a field",
+      "imageUrl": "https://images.unsplash.com/photo-1688242685627-206ae87e7672?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxwaG9uZSUyMGZpZWxkfGVufDB8fHx8MTc2NTA0OTM4N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "phone field"
+    },
+    {
+      "id": "user-avatar",
+      "description": "Avatar for a farmer user",
+      "imageUrl": "https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxwZXJzb24lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjUwMjYxNTV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person portrait"
+    }
+  ]
 }
