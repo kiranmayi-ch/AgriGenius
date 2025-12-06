@@ -14,13 +14,13 @@ import { Progress } from "@/components/ui/progress";
 
 const initialState: CropRecommendationState = {
   form: {
-    location: "Punjab, India",
-    landSize: 50,
-    farmDetails: "Loamy soil, good irrigation.",
-    soilData: "pH 6.8, high in nitrogen, medium phosphorus.",
-    weatherForecast: "Warm and sunny with occasional rain.",
-    cropRotationHistory: "2023: Wheat, 2022: Rice, 2021: Sugarcane",
-    marketTrends: "High demand for organic vegetables and grains.",
+    location: "",
+    landSize: 0,
+    farmDetails: "",
+    soilData: "",
+    weatherForecast: "",
+    cropRotationHistory: "",
+    marketTrends: "",
   },
 };
 
@@ -123,7 +123,7 @@ export function CropRecommendationForm() {
                                     <span className="font-bold">{rec.expectedYield}</span>
                                 </div>
                                 <div className="flex justify-between items-center text-sm">
-                                    <span className="font-medium flex items-center gap-1"><span className="text-accent font-bold text-base">$</span> Profit Margin</span>
+                                    <span className="font-medium flex items-center gap-1"><span className="text-accent font-bold text-base">₹</span> Profit Margin</span>
                                     <span className="font-bold">{rec.profitMargin}</span>
                                 </div>
                                 <div className="space-y-1">

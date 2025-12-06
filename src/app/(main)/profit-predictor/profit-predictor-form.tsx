@@ -13,11 +13,11 @@ import { Separator } from "@/components/ui/separator";
 
 const initialState: ProfitPredictorState = {
   form: {
-    cropType: "Wheat",
-    landSizeAcres: 50,
-    expectedYieldPerAcre: 1500, // in kg
-    sellingPricePerUnit: 0.25, // per kg
-    inputCostsPerAcre: 200,
+    cropType: "",
+    landSizeAcres: 0,
+    expectedYieldPerAcre: 0,
+    sellingPricePerUnit: 0,
+    inputCostsPerAcre: 0,
   },
 };
 
@@ -44,11 +44,11 @@ export function ProfitPredictorForm() {
   const [state, formAction] = useActionState(getProfitPrediction, initialState);
 
   const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
+    return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(value);
   }
 
   const formatNumber = (value: number) => {
-    return new Intl.NumberFormat('en-US').format(value);
+    return new Intl.NumberFormat('en-IN').format(value);
   }
 
   return (
@@ -76,12 +76,12 @@ export function ProfitPredictorForm() {
                 <Input id="expectedYieldPerAcre" name="expectedYieldPerAcre" type="number" defaultValue={state.form.expectedYieldPerAcre} />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="sellingPricePerUnit">Selling Price / Unit ($)</Label>
+                <Label htmlFor="sellingPricePerUnit">Selling Price / Unit (₹)</Label>
                 <Input id="sellingPricePerUnit" name="sellingPricePerUnit" type="number" step="0.01" defaultValue={state.form.sellingPricePerUnit} />
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="inputCostsPerAcre">Input Costs / Acre ($)</Label>
+              <Label htmlFor="inputCostsPerAcre">Input Costs / Acre (₹)</Label>
               <Input id="inputCostsPerAcre" name="inputCostsPerAcre" type="number" defaultValue={state.form.inputCostsPerAcre} />
             </div>
           </CardContent>
