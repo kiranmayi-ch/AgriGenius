@@ -9,3 +9,4 @@ import '@/ai/flows/disease-detection-from-image.ts';
 import '@/ai/flows/text-to-speech.ts';
 import '@/ai/flows/answer-expert-questions.ts';
 import '@/ai/flows/damage-cost-calculator.ts';
+import '@/ai/flows/community-insights.ts';
