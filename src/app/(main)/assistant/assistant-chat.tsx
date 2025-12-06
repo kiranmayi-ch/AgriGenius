@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { getAssistantResponse } from "./actions";
+import { getAssistantResponse, getSpeechFromText } from "./actions";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader2, Mic, Send, Sparkles, Sprout, Volume2, User } from "lucide-react";
+import { Loader2, Mic, Send, Sparkles, Sprout, Volume2, User, Loader } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
@@ -25,10 +25,13 @@ export function AssistantChat() {
   const [language, setLanguage] = useState<AnswerFarmerQuestionsInput['language']>('en');
   const [isLoading, setIsLoading] = useState(false);
   const [isListening, setIsListening] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState<number | null>(null);
 
   const { toast } = useToast();
   const recognitionRef = useRef<any>(null);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
 
   useEffect(() => {
     if (scrollAreaRef.current) {
@@ -39,18 +42,44 @@ export function AssistantChat() {
     }
   }, [messages]);
 
-  const handleSpeak = (text: string) => {
-    if (!window.speechSynthesis) {
-        toast({
-            variant: "destructive",
-            title: "Browser Not Supported",
-            description: "Speech synthesis is not supported in your browser.",
-        });
-        return;
+  const handleSpeak = async (text: string, messageId: number) => {
+    if (isSpeaking) {
+      audioRef.current?.pause();
+      audioRef.current = null;
+      setIsSpeaking(null);
+      if (isSpeaking === messageId) return;
     }
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = language;
-    window.speechSynthesis.speak(utterance);
+
+    setIsSpeaking(messageId);
+    try {
+      const response = await getSpeechFromText({ text, language });
+      if ("audioDataUri" in response) {
+        if (audioRef.current) {
+          audioRef.current.pause();
+        }
+        const audio = new Audio(response.audioDataUri);
+        audioRef.current = audio;
+        audio.play();
+        audio.onended = () => {
+          setIsSpeaking(null);
+        };
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Audio Error",
+          description: response.error,
+        });
+        setIsSpeaking(null);
+      }
+    } catch (error) {
+      console.error("Speech synthesis error:", error);
+      toast({
+        variant: "destructive",
+        title: "Audio Error",
+        description: "Failed to generate audio.",
+      });
+      setIsSpeaking(null);
+    }
   };
   
   const setupSpeechRecognition = useCallback(() => {
@@ -165,8 +194,8 @@ export function AssistantChat() {
                 >
                 <p className="whitespace-pre-wrap">{message.content}</p>
                 {message.role === 'assistant' && (
-                    <Button variant="ghost" size="icon" className="h-7 w-7 mt-2" onClick={() => handleSpeak(message.content)}>
-                        <Volume2 className="h-4 w-4" />
+                    <Button variant="ghost" size="icon" className="h-7 w-7 mt-2" onClick={() => handleSpeak(message.content, message.id)}>
+                        {isSpeaking === message.id ? <Loader className="h-4 w-4 animate-spin" /> : <Volume2 className="h-4 w-4" />}
                     </Button>
                 )}
                 </div>
