@@ -1,7 +1,7 @@
 "use server";
 
 import { detectDiseaseFromImage, type DetectDiseaseFromImageOutput } from "@/ai/flows/disease-detection-from-image";
-import { calculateDamageCost, DamageCostCalculatorInputSchema, type DamageCostCalculatorOutput } from "@/ai/flows/damage-cost-calculator";
+import { calculateDamageCost, type DamageCostCalculatorInput, type DamageCostCalculatorOutput } from "@/ai/flows/damage-cost-calculator";
 import { z } from "zod";
 
 export type DiseaseDetectionState = {
@@ -10,7 +10,7 @@ export type DiseaseDetectionState = {
   error?: string;
   damageCostResult?: DamageCostCalculatorOutput;
   damageCostError?: string;
-  damageCostForm?: z.infer<typeof DamageCostCalculatorInputSchema>;
+  damageCostForm?: DamageCostCalculatorInput;
 };
 
 const DiseaseDetectionSchema = z.object({
@@ -44,6 +44,15 @@ export async function getDiseaseDetection(
     };
   }
 }
+
+const DamageCostCalculatorInputSchema = z.object({
+  cropType: z.string().describe('The type of crop affected by the disease.'),
+  landSizeAcres: z.coerce.number().describe('The size of the land in acres.'),
+  expectedYieldPerAcre: z.coerce.number().describe('The expected yield per acre (in kg) for the crop.'),
+  sellingPricePerUnit: z.coerce.number().describe('The average expected selling price per unit (e.g., per kg) of the crop.'),
+  diseaseName: z.string().describe('The name of the detected disease.'),
+  diseaseSeverity: z.enum(['Low', 'Medium', 'High']).describe('The severity of the disease.'),
+});
 
 export async function getDamageCost(
   prevState: DiseaseDetectionState,

@@ -11,7 +11,7 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
-export const DamageCostCalculatorInputSchema = z.object({
+const DamageCostCalculatorInputSchema = z.object({
   cropType: z.string().describe('The type of crop affected by the disease.'),
   landSizeAcres: z.coerce.number().describe('The size of the land in acres.'),
   expectedYieldPerAcre: z.coerce.number().describe('The expected yield per acre (in kg) for the crop.'),
@@ -22,7 +22,7 @@ export const DamageCostCalculatorInputSchema = z.object({
 export type DamageCostCalculatorInput = z.infer<typeof DamageCostCalculatorInputSchema>;
 
 
-export const DamageCostCalculatorOutputSchema = z.object({
+const DamageCostCalculatorOutputSchema = z.object({
     estimatedYieldLossPercentage: z.string().describe('The estimated percentage range of yield loss (e.g., "5-15%").'),
     estimatedYieldLossQuantity: z.number().describe('The estimated total quantity of yield loss in kg.'),
     estimatedFinancialLoss: z.number().describe('The estimated total financial loss in the local currency.'),
@@ -31,14 +31,18 @@ export const DamageCostCalculatorOutputSchema = z.object({
 export type DamageCostCalculatorOutput = z.infer<typeof DamageCostCalculatorOutputSchema>;
 
 export async function calculateDamageCost(input: DamageCostCalculatorInput): Promise<DamageCostCalculatorOutput> {
-  return calculateDamageCostFlow(input);
-}
-
-const prompt = ai.definePrompt({
-  name: 'damageCostCalculatorPrompt',
-  input: {schema: DamageCostCalculatorInputSchema},
-  output: {schema: DamageCostCalculatorOutputSchema},
-  prompt: `You are an agricultural economist specializing in risk assessment for crop diseases.
+  const calculateDamageCostFlow = ai.defineFlow(
+    {
+      name: 'calculateDamageCostFlow',
+      inputSchema: DamageCostCalculatorInputSchema,
+      outputSchema: DamageCostCalculatorOutputSchema,
+    },
+    async input => {
+      const prompt = ai.definePrompt({
+        name: 'damageCostCalculatorPrompt',
+        input: {schema: DamageCostCalculatorInputSchema},
+        output: {schema: DamageCostCalculatorOutputSchema},
+        prompt: `You are an agricultural economist specializing in risk assessment for crop diseases.
 A farmer has a detected disease and wants to understand the potential financial loss if it goes untreated.
 
 Based on the data below, calculate the potential yield loss and financial cost.
@@ -69,16 +73,11 @@ Based on the data below, calculate the potential yield loss and financial cost.
 - Use bullet points for the recommendation.
 - Do not include any conversational text or introductions.
 `,
-});
+      });
 
-const calculateDamageCostFlow = ai.defineFlow(
-  {
-    name: 'calculateDamageCostFlow',
-    inputSchema: DamageCostCalculatorInputSchema,
-    outputSchema: DamageCostCalculatorOutputSchema,
-  },
-  async input => {
-    const {output} = await prompt(input);
-    return output!;
-  }
-);
+      const {output} = await prompt(input);
+      return output!;
+    }
+  );
+  return calculateDamageCostFlow(input);
+}
