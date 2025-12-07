@@ -48,7 +48,7 @@ export default function MainLayout({
             priority
             data-ai-hint="wheat field"
           />
-          <div className="absolute inset-0 bg-background/50" />
+          <div className="absolute inset-0 bg-background/20" />
           <div className="relative z-10 flex flex-col h-full">
             <div className="md:hidden flex items-center p-2 border-b bg-background/50">
               <ClientOnly>
