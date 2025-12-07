@@ -7,8 +7,16 @@ import { Label } from "@/components/ui/label";
 import { Phone, KeyRound } from "lucide-react";
 import Link from "next/link";
 import { Logo } from "@/components/logo";
+import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
+  const router = useRouter();
+
+  const handleSignUp = () => {
+    // For now, just redirect to the dashboard
+    router.push('/dashboard');
+  }
+
   return (
     <Card className="w-full max-w-md">
       <CardHeader className="text-center">
@@ -36,7 +44,7 @@ export default function SignUpPage() {
         </div>
       </CardContent>
       <CardFooter className="flex flex-col gap-4">
-        <Button className="w-full">Sign Up</Button>
+        <Button className="w-full" onClick={handleSignUp}>Sign Up</Button>
         <p className="text-xs text-muted-foreground text-center">
           Already have an account?{" "}
           <Link href="/login" className="text-primary hover:underline font-medium">
