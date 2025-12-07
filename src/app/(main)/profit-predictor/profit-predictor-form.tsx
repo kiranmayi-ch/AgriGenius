@@ -126,7 +126,7 @@ export function ProfitPredictorForm() {
                   </div>
                   <div className="flex items-center justify-between p-4 bg-secondary/50 rounded-lg">
                       <div className="flex items-center gap-3">
-                          <DollarSign className="h-6 w-6 text-muted-foreground" />
+                          <span className="font-bold text-muted-foreground text-xl">₹</span>
                           <span className="font-medium">Expected Income (Avg. Price)</span>
                       </div>
                       <span className="text-xl font-bold">{formatCurrency(state.result.expectedIncome)}</span>
