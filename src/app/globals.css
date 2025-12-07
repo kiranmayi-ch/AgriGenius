@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -16,8 +17,8 @@
     --secondary-foreground: 90 20% 25%; /* Dark green-brown */
     --muted: 90 30% 92%; /* Light grayish green */
     --muted-foreground: 90 15% 40%; /* Greyish green-brown */
-    --accent: 47 40% 65%; /* Soft beige/light brown */
-    --accent-foreground: 30 20% 15%; /* Dark brown for contrast */
+    --accent: 100 45% 40%; /* Earthy green */
+    --accent-foreground: 90 40% 95%; /* Light green-white */
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 90 20% 85%; /* Greenish border */
@@ -52,8 +53,8 @@
     --secondary-foreground: 90 25% 85%; /* Light green-beige text */
     --muted: 90 10% 20%; /* Dark green-brown */
     --muted-foreground: 90 15% 65%; /* Greyish green-beige */
-    --accent: 47 40% 65%; /* Soft beige/light brown */
-    --accent-foreground: 30 20% 15%; /* Dark brown for contrast */
+    --accent: 100 45% 40%; /* Earthy green */
+    --accent-foreground: 90 40% 95%; /* Light green-white */
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 90 10% 22%; /* Dark green-brown border */
@@ -81,5 +82,56 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .plant-container {
+    position: absolute;
+    bottom: 0;
+    transform-origin: bottom center;
+    animation: sway var(--duration) ease-in-out infinite;
+  }
+
+  .plant {
+    width: 80px;
+    height: 120px;
+    background-color: hsl(var(--primary) / 0.5);
+    border-radius: 40px 40px 0 0;
+    position: relative;
+  }
+
+  .plant::before,
+  .plant::after {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 80px;
+    background-color: hsl(var(--primary) / 0.4);
+    border-radius: 50%;
+  }
+
+  .plant::before {
+    left: -25px;
+    bottom: 20px;
+    transform: rotate(-30deg);
+  }
+
+  .plant::after {
+    right: -25px;
+    bottom: 40px;
+    transform: rotate(30deg);
+  }
+}
+
+@keyframes sway {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+  100% {
+    transform: rotate(0deg);
   }
 }
