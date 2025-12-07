@@ -41,11 +41,12 @@ export default function MainLayout({
       <SidebarInset>
         <div className="relative flex-1 overflow-hidden">
           <Image
-            src="https://images.unsplash.com/photo-1499529112087-3cb3b73cec95?q=80&w=1974&auto=format&fit=crop"
-            alt="background of a crop field"
+            src="https://images.unsplash.com/photo-1437419764061-2473afe69fc2?q=80&w=1974&auto=format&fit=crop"
+            alt="background of a wheat field at sunset"
             fill
             className="object-cover"
             priority
+            data-ai-hint="wheat field"
           />
           <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
           <div className="relative z-10 flex flex-col h-full">
