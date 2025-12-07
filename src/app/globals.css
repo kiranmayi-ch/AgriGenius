@@ -85,6 +85,18 @@
   }
 }
 
+@layer utilities {
+  .animate-float-slow {
+    animation: float 15s ease-in-out infinite;
+  }
+  .animate-float-slower {
+    animation: float 20s ease-in-out infinite;
+  }
+  .animate-float-slow-delay {
+    animation: float 18s ease-in-out 2s infinite;
+  }
+}
+
 @layer components {
   .plant-container {
     position: absolute;
@@ -133,5 +145,17 @@
   }
   100% {
     transform: rotate(0deg);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
   }
 }
