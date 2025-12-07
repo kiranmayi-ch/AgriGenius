@@ -1,3 +1,4 @@
+import { AnimatedBackground } from '@/components/animated-background';
 import { Logo } from '@/components/logo';
 import { MainNav } from '@/components/main-nav';
 import { UserNav } from '@/components/user-nav';
@@ -33,13 +34,18 @@ export default function MainLayout({
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
-        <div className="md:hidden flex items-center p-2 border-b">
-            <SidebarTrigger />
-            <div className="mx-auto">
-              <Logo />
+        <div className="relative flex-1 overflow-hidden">
+          <AnimatedBackground />
+          <div className="relative z-10 flex flex-col h-full">
+            <div className="md:hidden flex items-center p-2 border-b">
+              <SidebarTrigger />
+              <div className="mx-auto">
+                <Logo />
+              </div>
             </div>
+            {children}
+          </div>
         </div>
-        {children}
       </SidebarInset>
     </SidebarProvider>
   );
