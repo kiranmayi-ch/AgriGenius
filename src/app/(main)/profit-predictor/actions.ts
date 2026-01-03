@@ -1,3 +1,4 @@
+
 'use server';
 
 import {
@@ -40,9 +41,7 @@ export async function getProfitPrediction(
   const rawData = Object.fromEntries(formData.entries());
 
   // We need to remove the toggle fields before validating with the main schema
-  const cleanData = {
-    ...rawData
-  };
+  const cleanData = { ...rawData };
   delete (cleanData as any).useAverageYield;
   delete (cleanData as any).useAveragePrice;
   delete (cleanData as any).useAverageCost;
