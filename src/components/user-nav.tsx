@@ -1,4 +1,6 @@
 
+"use client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,8 +14,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { LogOut, Settings } from "lucide-react";
 import Link from "next/link";
+import { useLanguage } from "@/context/language-context";
 
 export function UserNav() {
+  const { translations } = useLanguage();
   return (
     <div className="p-2">
       <DropdownMenu>
@@ -28,7 +32,7 @@ export function UserNav() {
             </Avatar>
             <div className="text-left group-data-[collapsible=icon]:hidden">
               <p className="text-sm font-medium">AgriGenius</p>
-              <p className="text-xs text-muted-foreground">AI Farming Assistant</p>
+              <p className="text-xs text-muted-foreground">{translations.userNav.subtitle}</p>
             </div>
           </Button>
         </DropdownMenuTrigger>
@@ -37,7 +41,7 @@ export function UserNav() {
             <div className="flex flex-col space-y-1">
               <p className="text-sm font-medium leading-none">AgriGenius</p>
               <p className="text-xs leading-none text-muted-foreground">
-                AI Farming Assistant
+                {translations.userNav.subtitle}
               </p>
             </div>
           </DropdownMenuLabel>
@@ -45,14 +49,14 @@ export function UserNav() {
           <DropdownMenuGroup>
             <DropdownMenuItem>
               <Settings className="mr-2 h-4 w-4" />
-              <span>Settings</span>
+              <span>{translations.userNav.settings}</span>
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
             <Link href="/">
               <LogOut className="mr-2 h-4 w-4" />
-              <span>Log out</span>
+              <span>{translations.userNav.logout}</span>
             </Link>
           </DropdownMenuItem>
         </DropdownMenuContent>

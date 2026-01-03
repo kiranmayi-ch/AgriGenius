@@ -1,0 +1,65 @@
+
+{
+  "landing": {
+    "quote": "The ultimate goal of farming is not the growing of crops, but the cultivation and perfection of human beings.",
+    "getStarted": "Get Started"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "cropRecommender": "Crop Recommender",
+    "profitPredictor": "Profit Predictor",
+    "diseaseDetection": "Disease Detection",
+    "aiAssistant": "AI Assistant",
+    "agriExpert": "Agri Expert",
+    "community": "Community",
+    "encyclopedia": "Encyclopedia",
+    "weatherPlan": "Weather Plan"
+  },
+  "userNav": {
+    "subtitle": "AI Farming Assistant",
+    "settings": "Settings",
+    "logout": "Log out"
+  },
+  "dashboard": {
+    "welcome": "Welcome Back!",
+    "description": "Here's what's happening on your farm today.",
+    "totalRevenue": "Total Revenue",
+    "noData": "No data available",
+    "currentYield": "Current Yield",
+    "quickActions": "Quick Actions",
+    "yieldOverview": "Yield Overview",
+    "yieldDescription": "A summary of your crop yield over the past 6 months."
+  },
+  "cropRecommender": {
+    "title": "AI Crop Recommender",
+    "description": "Get intelligent crop suggestions based on your farm's data."
+  },
+  "profitPredictor": {
+    "title": "AI Profit Predictor",
+    "description": "Estimate the potential profit or loss for your next harvest."
+  },
+  "diseaseDetection": {
+    "title": "AI Disease Detection",
+    "description": "Upload a photo of a crop to detect diseases or nutrient deficiencies."
+  },
+  "aiAssistant": {
+    "title": "AI Assistant",
+    "description": "Ask me anything about farming. I can help in English, Telugu, and Hindi."
+  },
+  "agriExpert": {
+    "title": "Contact an Agriculture Expert",
+    "description": "Select a category to get specialized advice for your crops."
+  },
+  "community": {
+    "title": "Community Knowledge Hub",
+    "description": "Anonymously learn from nearby farmers about crops, diseases, and market trends."
+  },
+  "encyclopedia": {
+    "title": "Pest & Disease Encyclopedia",
+    "description": "Search for detailed information about common agricultural pests and diseases."
+  },
+  "weatherPlan": {
+    "title": "AI Weather-Proof Farming Plan",
+    "description": "Get a weather-resilient farming schedule for your crop."
+  }
+}

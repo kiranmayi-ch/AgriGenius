@@ -5,6 +5,8 @@ import { AgriExpertChat } from "./agri-expert-chat";
 import { useState } from "react";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sprout, Wheat, Carrot, Apple } from "lucide-react";
+import { useLanguage } from "@/context/language-context";
+
 
 const expertCategories = [
   { name: "Grains", icon: Wheat, description: "Wheat, Rice, Maize, etc." },
@@ -15,13 +17,14 @@ const expertCategories = [
 
 export default function AgriExpertPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const { translations } = useLanguage();
 
   if (selectedCategory) {
     return (
       <div className="flex flex-col h-[calc(100vh-theme(spacing.16))] sm:h-screen">
         <div className="p-4 sm:p-8 border-b">
           <PageHeader
-            title="Agriculture Expert"
+            title={translations.agriExpert.title}
             description={`Chat with an AI expert specializing in ${selectedCategory}.`}
           />
         </div>
@@ -33,8 +36,8 @@ export default function AgriExpertPage() {
   return (
     <div className="flex-1 space-y-4 p-4 sm:p-8 pt-6">
       <PageHeader
-        title="Contact an Agriculture Expert"
-        description="Select a category to get specialized advice for your crops."
+        title={translations.agriExpert.title}
+        description={translations.agriExpert.description}
       />
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {expertCategories.map((category) => (
