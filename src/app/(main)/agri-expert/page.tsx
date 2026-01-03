@@ -2,13 +2,14 @@
 "use client";
 
 import { PageHeader } from "@/components/page-header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardDescription, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Sprout, Wheat, Carrot, Apple, Phone, MessageSquare, UserCheck, MapPin, Search } from "lucide-react";
 import { useLanguage } from "@/context/language-context";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { ClientOnly } from "@/components/client-only";
 
 const experts = [
   { name: "Dr. Rajesh Kumar", category: "Grains", location: "Punjab", contact: "+91 98765 43210", whatsapp: "+91 98765 43210" },
@@ -48,31 +49,33 @@ export default function AgriExpertPage() {
           description="Enter your location to find nearby agricultural experts."
         />
         <div className="flex items-center justify-center pt-10">
-            <Card className="w-full max-w-lg">
-                <form onSubmit={handleLocationSubmit}>
-                    <CardHeader>
-                        <CardTitle>Find an Expert</CardTitle>
-                        <CardDescription>Enter your state or district to get started.</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="relative">
-                            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                            <Input 
-                                value={location}
-                                onChange={(e) => setLocation(e.target.value)}
-                                placeholder="e.g., Punjab, Haryana..."
-                                className="pl-10"
-                            />
-                        </div>
-                    </CardContent>
-                    <CardFooter>
-                        <Button type="submit" className="w-full">
-                            <Search className="mr-2 h-4 w-4"/>
-                            Search Experts
-                        </Button>
-                    </CardFooter>
-                </form>
-            </Card>
+            <ClientOnly>
+                <Card className="w-full max-w-lg">
+                    <form onSubmit={handleLocationSubmit}>
+                        <CardHeader>
+                            <CardTitle>Find an Expert</CardTitle>
+                            <CardDescription>Enter your state or district to get started.</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="relative">
+                                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                <Input
+                                    value={location}
+                                    onChange={(e) => setLocation(e.target.value)}
+                                    placeholder="e.g., Punjab, Haryana..."
+                                    className="pl-10"
+                                />
+                            </div>
+                        </CardContent>
+                        <CardFooter>
+                            <Button type="submit" className="w-full">
+                                <Search className="mr-2 h-4 w-4"/>
+                                Search Experts
+                            </Button>
+                        </CardFooter>
+                    </form>
+                </Card>
+            </ClientOnly>
         </div>
       </div>
     )
