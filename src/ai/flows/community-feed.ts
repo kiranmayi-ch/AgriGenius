@@ -12,7 +12,7 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'zod';
 
-export const CommunityFeedInputSchema = z.object({
+const CommunityFeedInputSchema = z.object({
   location: z
     .string()
     .describe(
@@ -21,7 +21,7 @@ export const CommunityFeedInputSchema = z.object({
   postContent: z.string().optional().describe("A new post content from the user to add to the feed simulation."),
 });
 
-export const CommunityFeedOutputSchema = z.object({
+const CommunityFeedOutputSchema = z.object({
   posts: z.array(z.object({
     id: z.number().describe("A unique ID for the post."),
     author: z.string().describe("A plausible, anonymous name for the author (e.g., 'Farmer from Guntur', 'Ravi S.')."),
