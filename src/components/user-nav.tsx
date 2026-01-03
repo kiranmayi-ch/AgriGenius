@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut, Settings, User } from "lucide-react";
+import { LogOut, Settings } from "lucide-react";
 import Link from "next/link";
 
 export function UserNav() {
@@ -24,31 +24,25 @@ export function UserNav() {
           >
             <Avatar className="h-8 w-8">
               <AvatarImage src="" alt="User avatar" />
-              <AvatarFallback>U</AvatarFallback>
+              <AvatarFallback>A</AvatarFallback>
             </Avatar>
             <div className="text-left group-data-[collapsible=icon]:hidden">
-              <p className="text-sm font-medium">Your Name</p>
-              <p className="text-xs text-muted-foreground">your.email@example.com</p>
+              <p className="text-sm font-medium">AgriGenius</p>
+              <p className="text-xs text-muted-foreground">AI Farming Assistant</p>
             </div>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end" forceMount>
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
-              <p className="text-sm font-medium leading-none">Your Name</p>
+              <p className="text-sm font-medium leading-none">AgriGenius</p>
               <p className="text-xs leading-none text-muted-foreground">
-                your.email@example.com
+                AI Farming Assistant
               </p>
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem asChild>
-              <Link href="/profile">
-                <User className="mr-2 h-4 w-4" />
-                <span>Profile</span>
-              </Link>
-            </DropdownMenuItem>
             <DropdownMenuItem>
               <Settings className="mr-2 h-4 w-4" />
               <span>Settings</span>

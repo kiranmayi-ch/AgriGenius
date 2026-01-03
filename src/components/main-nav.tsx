@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/sidebar";
 import {
   LayoutDashboard,
-  User,
   BrainCircuit,
   BarChart,
   Bug,
@@ -23,7 +22,6 @@ import {
 
 const menuItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, tooltip: "Dashboard" },
-  { href: "/profile", label: "My Farm", icon: User, tooltip: "My Farm" },
   {
     href: "/crop-recommendation",
     label: "Crop Recommender",
