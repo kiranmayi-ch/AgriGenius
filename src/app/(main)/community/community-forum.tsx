@@ -45,6 +45,7 @@ function CommunityForumInternal() {
     const [location, setLocation] = useState('');
     const [hasSetLocation, setHasSetLocation] = useState(false);
     const formRef = useRef<HTMLFormElement>(null);
+    const locationFormRef = useRef<HTMLFormElement>(null);
 
      useEffect(() => {
         if (state.form.postContent === '' && state.feed) {
@@ -56,10 +57,8 @@ function CommunityForumInternal() {
         e.preventDefault();
         if(location.trim()) {
             setHasSetLocation(true);
-            // Trigger the form action to fetch initial feed
-            const formData = new FormData();
-            formData.append('location', location);
-            formAction(formData);
+            // Programmatically submit the form to trigger the action correctly
+            locationFormRef.current?.requestSubmit();
         }
     }
 
@@ -90,6 +89,11 @@ function CommunityForumInternal() {
                             </Button>
                         </CardFooter>
                     </form>
+                    {/* Hidden form to handle initial feed fetch */}
+                    <form action={formAction} ref={locationFormRef} className="hidden">
+                         <input type="hidden" name="location" value={location} />
+                         <button type="submit">Submit</button>
+                    </form>
                 </Card>
             </div>
         )
@@ -99,11 +103,11 @@ function CommunityForumInternal() {
     <div className="space-y-6">
        <Card>
             <CardHeader>
-                <CardTitle>Community Forum: {location}</CardTitle>
+                <CardTitle>Community Forum: {location || state.form.location}</CardTitle>
                 <CardDescription>Ask questions, share advice, and connect with farmers in your area.</CardDescription>
             </CardHeader>
              <form action={formAction} ref={formRef}>
-                 <input type="hidden" name="location" value={location} />
+                 <input type="hidden" name="location" value={location || state.form.location} />
                 <CardContent>
                     <Label htmlFor="postContent" className="sr-only">New Post</Label>
                     <Textarea 
@@ -132,7 +136,7 @@ function CommunityForumInternal() {
          <Card>
             <CardContent className="p-6 flex flex-col items-center justify-center space-y-4 h-64">
                 <Loader2 className="h-12 w-12 animate-spin text-primary" />
-                <p className="text-muted-foreground">Loading community feed for {location}...</p>
+                <p className="text-muted-foreground">Loading community feed for {location || state.form.location}...</p>
             </CardContent>
          </Card>
       )}
