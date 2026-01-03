@@ -66,7 +66,7 @@ const prompt = ai.definePrompt({
 
 1.  **Top 3 Crop Recommendations:**
     *   Provide a ranked list of the top 3 most suitable crops.
-    *   For each crop, include: `cropName`, `expectedYield`, `profitMargin`, `sustainabilityScore` (0-100), and a detailed `rationale`.
+    *   For each crop, include: cropName, expectedYield, profitMargin, sustainabilityScore (0-100), and a detailed rationale.
 
 2.  **Soil Parameter Analysis:**
     *   Analyze the provided soil parameters (pH, N, P, K).
@@ -81,7 +81,7 @@ const prompt = ai.definePrompt({
     *   Explain why this specific combination makes the crop a prime candidate.
 
 5.  **Sustainable Farming Decision Support:**
-    *   Based on the `sustainabilityScore`, provide actionable advice.
+    *   Based on the sustainabilityScore, provide actionable advice.
     *   For high scores, explain what makes the crop sustainable.
     *   For lower scores, suggest practices (e.g., cover cropping, reduced tillage, water conservation methods) to improve sustainability for that crop in this environment.
 
