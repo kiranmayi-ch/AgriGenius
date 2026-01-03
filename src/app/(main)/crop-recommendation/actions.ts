@@ -1,3 +1,4 @@
+
 "use server";
 
 import { recommendCrops, type CropRecommendationInput } from "@/ai/flows/crop-recommendation-from-profile";
@@ -7,15 +8,17 @@ import {ai} from '@/ai/genkit';
 
 export type CropRecommendationState = {
   form: CropRecommendationInput;
-  recommendations?: Awaited<ReturnType<typeof recommendCrops>>['recommendations'];
+  recommendations?: Awaited<ReturnType<typeof recommendCrops>>;
   error?: string;
 };
 
 const CropRecommendationSchema = z.object({
   location: z.string().min(1, "Location is required."),
   landSize: z.coerce.number().min(0.1, "Land size must be positive."),
-  farmDetails: z.string().min(1, "Farm details are required."),
-  soilData: z.string().min(1, "Soil data is required."),
+  soilPH: z.coerce.number().min(0, "Soil pH must be a positive number.").max(14, "Soil pH must be between 0 and 14."),
+  soilNitrogen: z.coerce.number().min(0, "Nitrogen level must be a positive number."),
+  soilPhosphorus: z.coerce.number().min(0, "Phosphorus level must be a positive number."),
+  soilPotassium: z.coerce.number().min(0, "Potassium level must be a positive number."),
   weatherForecast: z.string().min(1, "Weather forecast is required."),
   cropRotationHistory: z.string().min(1, "Crop rotation history is required."),
   marketTrends: z.string().min(1, "Market trends are required."),
@@ -41,7 +44,7 @@ export async function getCropRecommendations(
     const result = await recommendCrops(validatedFields.data);
     return {
       form: validatedFields.data,
-      recommendations: result.recommendations,
+      recommendations: result,
     };
   } catch (e: any) {
     console.error(e);
