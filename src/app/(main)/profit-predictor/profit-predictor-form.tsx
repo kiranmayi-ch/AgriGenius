@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { getProfitPrediction, type ProfitPredictorState } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,6 +11,7 @@ import { BarChart, DollarSign, Leaf, LineChart, Loader2, Sparkles, Map, Pin } fr
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
 import { useFormStatus } from "react-dom";
+import { ClientOnly } from "@/components/client-only";
 
 const initialState: ProfitPredictorState = {
   form: {
@@ -55,47 +56,49 @@ export function ProfitPredictorForm() {
 
   return (
     <div className="space-y-6">
-      <form action={formAction}>
-        <Card>
-          <CardHeader>
-            <CardTitle>Crop & Cost Details</CardTitle>
-            <CardDescription>
-              Enter your estimates to predict the financial outcome of your harvest.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-                <Label htmlFor="location">Your Location</Label>
-                <Input id="location" name="location" placeholder="e.g., Nashik, Maharashtra" />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <ClientOnly>
+        <form action={formAction}>
+          <Card>
+            <CardHeader>
+              <CardTitle>Crop & Cost Details</CardTitle>
+              <CardDescription>
+                Enter your estimates to predict the financial outcome of your harvest.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="cropType">Crop Type</Label>
-                <Input id="cropType" name="cropType" placeholder="e.g., Wheat" />
+                  <Label htmlFor="location">Your Location</Label>
+                  <Input id="location" name="location" placeholder="e.g., Nashik, Maharashtra" />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="cropType">Crop Type</Label>
+                  <Input id="cropType" name="cropType" placeholder="e.g., Wheat" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="landSizeAcres">Land Size (in acres)</Label>
+                  <Input id="landSizeAcres" name="landSizeAcres" type="number" placeholder="e.g., 50" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="expectedYieldPerAcre">Expected Yield / Acre (kg)</Label>
+                  <Input id="expectedYieldPerAcre" name="expectedYieldPerAcre" type="number" placeholder="e.g., 2000" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="sellingPricePerUnit">Avg. Selling Price / Unit (₹)</Label>
+                  <Input id="sellingPricePerUnit" name="sellingPricePerUnit" type="number" step="0.01" placeholder="e.g., 20" />
+                </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="landSizeAcres">Land Size (in acres)</Label>
-                <Input id="landSizeAcres" name="landSizeAcres" type="number" placeholder="e.g., 50" />
+                <Label htmlFor="inputCostsPerAcre">Input Costs / Acre (₹)</Label>
+                <Input id="inputCostsPerAcre" name="inputCostsPerAcre" type="number" placeholder="e.g., 15000" />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="expectedYieldPerAcre">Expected Yield / Acre (kg)</Label>
-                <Input id="expectedYieldPerAcre" name="expectedYieldPerAcre" type="number" placeholder="e.g., 2000" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="sellingPricePerUnit">Avg. Selling Price / Unit (₹)</Label>
-                <Input id="sellingPricePerUnit" name="sellingPricePerUnit" type="number" step="0.01" placeholder="e.g., 20" />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="inputCostsPerAcre">Input Costs / Acre (₹)</Label>
-              <Input id="inputCostsPerAcre" name="inputCostsPerAcre" type="number" placeholder="e.g., 15000" />
-            </div>
-          </CardContent>
-          <CardFooter>
-            <SubmitButton />
-          </CardFooter>
-        </Card>
-      </form>
+            </CardContent>
+            <CardFooter>
+              <SubmitButton />
+            </CardFooter>
+          </Card>
+        </form>
+      </ClientOnly>
 
       {state.error && (
         <Alert variant="destructive">
