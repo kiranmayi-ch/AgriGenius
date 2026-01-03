@@ -2,7 +2,7 @@
 "use client";
 
 import { PageHeader } from "@/components/page-header";
-import { CommunityInsightsForm } from "./community-insights-form";
+import { CommunityForum } from "./community-forum";
 import { useLanguage } from "@/context/language-context";
 
 export default function CommunityPage() {
@@ -13,9 +13,7 @@ export default function CommunityPage() {
         title={translations.community.title}
         description={translations.community.description}
       />
-      <div className="max-w-4xl mx-auto">
-        <CommunityInsightsForm />
-      </div>
+      <CommunityForum />
     </div>
   );
 }

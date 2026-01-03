@@ -1,51 +1,61 @@
+
 'use server';
 
 import {
-  getCommunityInsights,
-  type CommunityInsightsInput,
-  type CommunityInsightsOutput,
-} from '@/ai/flows/community-insights';
+  getCommunityFeed,
+  type CommunityFeedInput,
+  type CommunityFeedOutput,
+} from '@/ai/flows/community-feed';
 import {z} from 'zod';
 
-export type CommunityInsightsState = {
-  form: {location: string};
-  result?: CommunityInsightsOutput;
+export type CommunityForumState = {
+  form: {location: string, postContent?: string};
+  feed?: CommunityFeedOutput;
   error?: string;
 };
 
-const CommunityInsightsSchema = z.object({
+const CommunityFeedSchema = z.object({
   location: z
     .string()
     .min(3, 'Location is required and must be at least 3 characters.'),
+  postContent: z.string().optional(),
 });
 
-export async function generateCommunityInsights(
-  prevState: CommunityInsightsState,
+export async function generateCommunityFeed(
+  prevState: CommunityForumState,
   formData: FormData
-): Promise<CommunityInsightsState> {
-  const validatedFields = CommunityInsightsSchema.safeParse({
+): Promise<CommunityForumState> {
+  const validatedFields = CommunityFeedSchema.safeParse({
     location: formData.get('location'),
+    postContent: formData.get('postContent'),
   });
 
   if (!validatedFields.success) {
     return {
-      form: {location: (formData.get('location') as string) || ''},
-      error: 'Invalid location. Please enter a valid location.',
+      form: {
+          location: (formData.get('location') as string) || '',
+          postContent: (formData.get('postContent') as string) || ''
+        },
+      error: 'Invalid form data. Please ensure location is set.',
     };
   }
+  
+  // Clear post content after submission, but keep location
+  const nextFormState = { ...validatedFields.data, postContent: '' };
+
 
   try {
-    const result = await getCommunityInsights(validatedFields.data);
+    const result = await getCommunityFeed(validatedFields.data);
     return {
-      form: validatedFields.data,
-      result,
+      form: nextFormState,
+      feed: result,
     };
   } catch (e: any) {
     return {
-      form: validatedFields.data,
+      form: validatedFields.data, // Keep original data on error
       error:
         e.message ||
-        'An unexpected error occurred while fetching community insights.',
+        'An unexpected error occurred while fetching the community feed.',
     };
   }
 }

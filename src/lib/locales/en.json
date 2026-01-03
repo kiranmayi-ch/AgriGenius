@@ -11,7 +11,7 @@
     "diseaseDetection": "Disease Detection",
     "aiAssistant": "AI Assistant",
     "agriExpert": "Agri Expert",
-    "community": "Community",
+    "community": "Community Forum",
     "encyclopedia": "Encyclopedia"
   },
   "userNav": {
@@ -50,8 +50,8 @@
     "description": "Select a category to get specialized advice for your crops."
   },
   "community": {
-    "title": "Community Knowledge Hub",
-    "description": "Anonymously learn from nearby farmers about crops, diseases, and market trends."
+    "title": "Community Forum",
+    "description": "Connect with other farmers, ask questions, and share your knowledge."
   },
   "encyclopedia": {
     "title": "Pest & Disease Encyclopedia",

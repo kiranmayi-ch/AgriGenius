@@ -11,7 +11,7 @@ import {
 import Link from "next/link";
 import { Leaf, BrainCircuit, BarChart, Bug, MessageCircle } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
-import { YieldChart } from "./yield-chart";
+import { CommunityForum } from "../community/community-forum";
 import { useLanguage } from "@/context/language-context";
 
 const quickActionsConfig = [
@@ -73,17 +73,7 @@ export default function DashboardPage() {
         </Card>
       </div>
       <div className="grid gap-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>{translations.dashboard.yieldOverview}</CardTitle>
-            <CardDescription>
-              {translations.dashboard.yieldDescription}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="pl-2">
-            <YieldChart />
-          </CardContent>
-        </Card>
+        <CommunityForum />
       </div>
     </div>
   );
