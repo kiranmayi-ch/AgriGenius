@@ -5,18 +5,21 @@ import { getAssistantResponse, getSpeechFromText } from "./actions";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader2, Mic, Send, Sparkles, Sprout, Volume2, User, Loader } from "lucide-react";
+import { Loader2, Mic, Send, Sparkles, Sprout, Volume2, User, Loader, ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import type { AnswerFarmerQuestionsInput } from "@/ai/flows/answer-farmer-questions";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Progress } from "@/components/ui/progress";
 
 type Message = {
   id: number;
   role: "user" | "assistant";
   content: string;
+  confidenceScore?: number;
 };
 
 export function AssistantChat() {
@@ -144,6 +147,7 @@ export function AssistantChat() {
         id: Date.now() + 1,
         role: "assistant",
         content: response.answer,
+        confidenceScore: response.confidenceScore,
       };
       setMessages((prev) => [...prev, assistantMessage]);
     } else {
@@ -157,6 +161,13 @@ export function AssistantChat() {
 
     setIsLoading(false);
   };
+  
+  const getConfidenceColor = (score: number) => {
+    if (score > 75) return "bg-green-500";
+    if (score > 40) return "bg-yellow-500";
+    return "bg-red-500";
+  }
+
 
   return (
     <div className="flex flex-col flex-1 bg-card">
@@ -193,10 +204,29 @@ export function AssistantChat() {
                 )}
                 >
                 <p className="whitespace-pre-wrap">{message.content}</p>
-                {message.role === 'assistant' && (
-                    <Button variant="ghost" size="icon" className="h-7 w-7 mt-2" onClick={() => handleSpeak(message.content, message.id)}>
-                        {isSpeaking === message.id ? <Loader className="h-4 w-4 animate-spin" /> : <Volume2 className="h-4 w-4" />}
-                    </Button>
+                 {message.role === 'assistant' && (
+                    <div className="flex items-center justify-between mt-3 pt-2 border-t border-muted-foreground/10">
+                        {message.confidenceScore !== undefined && (
+                            <TooltipProvider>
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <div className="flex items-center gap-2">
+                                            <ShieldCheck className="h-4 w-4 text-muted-foreground"/>
+                                            <div className="w-20">
+                                               <Progress value={message.confidenceScore} className={`h-1.5 [&>div]:${getConfidenceColor(message.confidenceScore)}`} />
+                                            </div>
+                                        </div>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <p>Confidence: {message.confidenceScore}%</p>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
+                        )}
+                        <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => handleSpeak(message.content, message.id)}>
+                            {isSpeaking === message.id ? <Loader className="h-4 w-4 animate-spin" /> : <Volume2 className="h-4 w-4" />}
+                        </Button>
+                    </div>
                 )}
                 </div>
                  {message.role === "user" && (

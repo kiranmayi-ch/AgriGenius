@@ -1,6 +1,6 @@
 "use server";
 
-import { answerFarmerQuestions, type AnswerFarmerQuestionsInput } from "@/ai/flows/answer-farmer-questions";
+import { answerFarmerQuestions, type AnswerFarmerQuestionsInput, type AnswerFarmerQuestionsOutput } from "@/ai/flows/answer-farmer-questions";
 import { textToSpeech, type TextToSpeechInput } from "@/ai/flows/text-to-speech";
 import { z } from "zod";
 
@@ -11,7 +11,7 @@ const AssistantActionSchema = z.object({
 
 export async function getAssistantResponse(
   input: AnswerFarmerQuestionsInput
-): Promise<{answer: string} | {error: string}> {
+): Promise<AnswerFarmerQuestionsOutput | {error: string}> {
   const validatedFields = AssistantActionSchema.safeParse(input);
 
   if (!validatedFields.success) {
@@ -22,7 +22,7 @@ export async function getAssistantResponse(
 
   try {
     const result = await answerFarmerQuestions(validatedFields.data);
-    return { answer: result.answer };
+    return result;
   } catch (e: any) {
     return {
       error: e.message || "An unexpected error occurred.",

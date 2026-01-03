@@ -25,6 +25,7 @@ export type AnswerFarmerQuestionsInput = z.infer<
 
 const AnswerFarmerQuestionsOutputSchema = z.object({
   answer: z.string().describe('The answer to the farmer question.'),
+  confidenceScore: z.number().describe('A score from 0-100 indicating the confidence in the answer provided.'),
 });
 
 export type AnswerFarmerQuestionsOutput = z.infer<
@@ -49,6 +50,10 @@ const prompt = ai.definePrompt({
 questions about farming practices, crop care, and market information.
 Provide clear, natural language responses with actionable steps.
 Respond in the language specified by the user.
+
+Along with your answer, provide a confidence score from 0 to 100.
+A score of 100 means you are absolutely certain, and a score of 0 means you are completely unsure.
+Base your confidence on the clarity and specificity of the user's question and the data you have available.
 
 Question: {{{query}}}
 Language: {{{language}}}`,
