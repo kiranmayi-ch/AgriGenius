@@ -1,10 +1,11 @@
+
 "use client";
 
 import React, { createContext, useContext, useState, useMemo } from 'react';
 import en from '@/lib/locales/en.json';
 import te from '@/lib/locales/te.json';
+import hi from '@/lib/locales/hi.json';
 // Import other languages similarly, using placeholders for now
-import hi from '@/lib/locales/en.json';
 import ta from '@/lib/locales/en.json';
 import ml from '@/lib/locales/en.json';
 import bn from '@/lib/locales/en.json';
