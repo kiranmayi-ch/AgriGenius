@@ -12,8 +12,7 @@
     "aiAssistant": "AI Assistant",
     "agriExpert": "Agri Expert",
     "community": "Community",
-    "encyclopedia": "Encyclopedia",
-    "weatherPlan": "Weather Plan"
+    "encyclopedia": "Encyclopedia"
   },
   "userNav": {
     "subtitle": "AI Farming Assistant",
@@ -57,9 +56,5 @@
   "encyclopedia": {
     "title": "Pest & Disease Encyclopedia",
     "description": "Search for detailed information about common agricultural pests and diseases."
-  },
-  "weatherPlan": {
-    "title": "AI Weather-Proof Farming Plan",
-    "description": "Get a weather-resilient farming schedule for your crop."
   }
 }

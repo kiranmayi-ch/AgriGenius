@@ -17,7 +17,6 @@ import {
   UserCheck,
   Users,
   BookOpen,
-  CloudSun,
 } from "lucide-react";
 import { useLanguage } from "@/context/language-context";
 
@@ -30,7 +29,6 @@ const menuItemsConfig = [
   { href: "/agri-expert", key: "agriExpert", icon: UserCheck },
   { href: "/community", key: "community", icon: Users },
   { href: "/encyclopedia", key: "encyclopedia", icon: BookOpen },
-  { href: "/weather-plan", key: "weatherPlan", icon: CloudSun },
 ];
 
 export function MainNav() {
